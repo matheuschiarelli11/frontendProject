@@ -42,7 +42,10 @@ export const Form = styled.form`
     }
 `;
 
-export const RegisterButton = styled.button`
+export const RegisterButton = styled.button.attrs((props) => ({
+    disabled: props.buttonEnable,
+}))`
+    cursor: pointer;
     border: 0;
     background: #b30059;
     border-radius: 4px;
@@ -53,4 +56,9 @@ export const RegisterButton = styled.button`
     font-family: "Josefin Sans", sans-serif;
     font-weight: bolder;
     color: white;
+
+    :disabled {
+        cursor: default;
+        opacity: 0.4;
+    }
 `;

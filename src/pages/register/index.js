@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import Tippy from "@tippy.js/react";
+import "tippy.js/dist/tippy.css";
 
 import { FaBurn } from "react-icons/fa";
 
 import { Redirect } from "react-router-dom";
 import { authService } from "../../services/api";
+import { toast } from "react-toastify";
 
 import { Container, Form, RegisterButton } from "./styles";
 
@@ -12,25 +15,35 @@ export default class register extends Component {
         name: "",
         email: "",
         password: "",
+        buttonEnable: false,
         redirectTo: null,
     };
 
     changeNome = (event) => {
-        this.setState({
-            name: event.target.value,
-        });
+        this.setState(
+            {
+                name: event.target.value,
+            },
+            this.inputVerify
+        );
     };
 
     changeEmail = (event) => {
-        this.setState({
-            email: event.target.value,
-        });
+        this.setState(
+            {
+                email: event.target.value,
+            },
+            this.inputVerify
+        );
     };
 
     changePassword = (event) => {
-        this.setState({
-            password: event.target.value,
-        });
+        this.setState(
+            {
+                password: event.target.value,
+            },
+            this.inputVerify
+        );
     };
 
     singUp = async (event) => {
@@ -41,13 +54,34 @@ export default class register extends Component {
             email: this.state.email,
             password: this.state.password,
         };
-        const res = await authService.registerUser(data);
-        console.log("res", res.data);
-        authService.loggedUser(res.data);
-        this.setState({
-            redirectTo: "/main",
-        });
-        return res.data;
+
+        try {
+            const res = await authService.registerUser(data);
+            console.log("res", res.data);
+            authService.loggedUser(res.data);
+            this.setState({
+                redirectTo: "/main",
+            });
+            return res.data;
+        } catch (error) {
+            toast.error("Preencha os espaços corretamente");
+        }
+    };
+
+    inputVerify = () => {
+        if (
+            this.state.name &&
+            this.state.password.length >= 5 &&
+            this.state.email
+        ) {
+            this.setState({
+                buttonEnable: true,
+            });
+        } else {
+            this.setState({
+                buttonEnable: false,
+            });
+        }
     };
 
     async componentDidMount() {
@@ -64,7 +98,7 @@ export default class register extends Component {
             return <Redirect to={this.state.redirectTo} />;
         }
 
-        const { name, email, password } = this.state;
+        const { name, email, password, buttonEnable } = this.state;
 
         return (
             <Container>
@@ -87,16 +121,23 @@ export default class register extends Component {
                             value={email}
                             onChange={this.changeEmail}
                         />
-
-                        <input
-                            type="password"
-                            placeholder="Senha"
-                            value={password}
-                            onChange={this.changePassword}
-                        />
+                        <Tippy
+                            content="Senha precisa conter no minimo CINCO caracteres!"
+                            placement="bottom"
+                        >
+                            <input
+                                type="password"
+                                placeholder="Senha"
+                                value={password}
+                                onChange={this.changePassword}
+                            />
+                        </Tippy>
                     </div>
 
-                    <RegisterButton onClick={this.singUp}>
+                    <RegisterButton
+                        buttonEnable={!buttonEnable}
+                        onClick={this.singUp}
+                    >
                         Cadastre-se
                     </RegisterButton>
                 </Form>

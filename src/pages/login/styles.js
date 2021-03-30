@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import "react-toastify/dist/ReactToastify.css";
+
 export const Container = styled.div`
     max-width: 700px;
     background: #fff;

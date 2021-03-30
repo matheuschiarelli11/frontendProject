@@ -6,6 +6,7 @@ import { authService } from "../../services/api";
 import { FaDesktop } from "react-icons/fa";
 
 import { Container, Form, SubmitButton } from "./styles";
+import { toast } from "react-toastify";
 
 export default class login extends Component {
     state = {
@@ -49,8 +50,7 @@ export default class login extends Component {
                 redirectTo: "/main",
             });
         } catch (error) {
-            console.log(error.response.data.error);
-            alert("Erro ao efetuar login");
+            toast.error("Credenciais incorretas ou usuário inexistente!");
         }
     };
 
