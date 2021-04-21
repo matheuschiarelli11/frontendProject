@@ -64,7 +64,7 @@ export default class register extends Component {
             });
             return res.data;
         } catch (error) {
-            toast.error("Preencha os espaços corretamente");
+            toast.error(error.response.data.error);
         }
     };
 

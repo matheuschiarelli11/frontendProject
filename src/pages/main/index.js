@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { authService } from "../../services/api";
+import Navbar from "../components/menuBar/navbar";
 
 import { Title, LogOutButton } from "./styles";
 
@@ -29,6 +30,7 @@ export default class main extends Component {
 
         return (
             <>
+                <Navbar />
                 <Title>Você esta logado, clique em "Sair" para deslogar</Title>
 
                 <LogOutButton onClick={authService.cleanLoggedUser}>

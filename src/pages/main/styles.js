@@ -19,7 +19,13 @@ export const LogOutButton = styled.button`
     border: 0;
     padding: 15px;
     border-radius: 4px;
+    cursor: pointer;
 
     font-size: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    &:hover {
+        background: #f04139;
+        transition: 0.4s;
+    }
 `;

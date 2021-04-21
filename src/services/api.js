@@ -13,6 +13,13 @@ export const authService = {
         return axios.post(endpoint, data);
     },
 
+    editUser(data) {
+        const endpoint = `${baseURL}/user/${data.id}`;
+        return axios.put(endpoint, data, {
+            headers: { authorization: `Bearer ${data.token}` },
+        });
+    },
+
     loggedUser(data) {
         const parsedData = JSON.stringify(data);
         localStorage.setItem("user", parsedData);
@@ -30,6 +37,11 @@ export const authService = {
             console.log(error);
             return null;
         }
+    },
+
+    async deleteUser(data) {
+        const endpoint = `${baseURL}/user/${data.id}`;
+        return axios.delete(endpoint);
     },
 
     cleanLoggedUser() {
