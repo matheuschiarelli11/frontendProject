@@ -1,25 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useSetState } from "react";
 import { authService } from "../../services/api";
 import { Container, EditUser } from "./styles";
 import swal from "sweetalert";
 
 const Modal = ({ onClose = () => {} }) => {
-    const [name, setName] = useState("");
+    const [name, setName, getValue] = useState("");
     const [password, setPassword] = useState("");
     const [user, setUser] = useState({});
+    const [buttonEnable, setButton] = useState(false);
+
+    const modalRef = useRef();
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("user"));
 
         setUser({ ...data.user, token: data.token });
+
+        let handler = (event) => {
+            if (!modalRef.current.contains(event.target)) {
+                onClose();
+            }
+        };
+
+        document.addEventListener("mousedown", handler);
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        };
     }, []);
 
-    function changeName(e) {
-        setName(e.target.value);
-    }
+    useEffect(() => {
+        inputVerify();
+    }, [name, password]);
 
-    function changePassword(e) {
-        setPassword(e.target.value);
+    function inputVerify() {
+        if (name && password) {
+            setButton(true);
+        } else {
+            setButton(false);
+        }
     }
 
     async function updateInfo() {
@@ -35,6 +54,7 @@ const Modal = ({ onClose = () => {} }) => {
         localStorage.removeItem("user");
         authService.loggedUser({ user: response.data, token: localUser.token });
         swal({
+            title: "Sucesso!",
             text: "Suas informações foram alteradas",
             type: "success",
         }).then(function () {
@@ -43,31 +63,35 @@ const Modal = ({ onClose = () => {} }) => {
     }
 
     return (
-        <Container>
+        <Container ref={modalRef}>
             <div className="modal-header">
                 <p>Alterar Usuário</p>
                 <span onClick={onClose} className="close-span">
                     X
                 </span>
             </div>
+
             <EditUser>
                 <h1>Nome</h1>
+
                 <input
                     placeholder="Altere seu nome de usuário"
-                    value={name}
-                    onChange={changeName}
+                    onChange={(e) => setName(e.target.value)}
                 ></input>
+
                 <h1>Digite sua senha</h1>
+
                 <input
-                    value={password}
-                    onChange={changePassword}
                     type="password"
+                    onChange={(e) => setPassword(e.target.value)}
                 ></input>
+
                 <button
                     onClick={() => {
                         updateInfo();
                         onClose();
                     }}
+                    disabled={!buttonEnable}
                 >
                     Salvar
                 </button>

@@ -34,8 +34,9 @@ export const Container = styled.div`
     }
 
     span {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         cursor: pointer;
+        margin-right: 40px;
     }
 `;
 
@@ -62,5 +63,10 @@ export const EditUser = styled.div`
         background: #dd501d;
         border: none;
         color: white;
+
+        :disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
     }
 `;
