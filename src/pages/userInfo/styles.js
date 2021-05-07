@@ -17,6 +17,7 @@ export const Container = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
+        margin-left: 130px;
     }
 
     .info-text {
@@ -24,6 +25,7 @@ export const Container = styled.div`
         font-size: 30px;
         flex-direction: row;
         display: block;
+        margin-left: 10px;
     }
 
     div {
@@ -39,13 +41,14 @@ export const ButtonEdit = styled.button`
     background: #091166;
     color: white;
     border: 0;
-    padding: 10px;
-    margin-left: 550px;
+    padding: 20px;
+    margin-left: 100px;
+    margin-top: 50px;
     border-radius: 4px;
-    font-size: 20px;
+    font-size: 19px;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
         sans-serif;
-    width: 80px;
+    width: 150px;
 `;
 
 export const ButtonDelete = styled.button`
@@ -57,7 +60,7 @@ export const ButtonDelete = styled.button`
     border-radius: 4px;
     font-size: 18px;
     padding: 18px;
-    margin-left: 260px;
+    margin-left: 450px;
     margin-top: 50px;
 
     &:hover {

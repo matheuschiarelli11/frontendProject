@@ -14,14 +14,15 @@ export const Title = styled.h1`
 `;
 
 export const LogOutButton = styled.button`
-    margin-left: 590px;
+    margin-left: 1100px;
     background: #ff5050;
     border: 0;
-    padding: 15px;
+    padding: 20px;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: -15px;
 
-    font-size: 15px;
+    font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
     &:hover {

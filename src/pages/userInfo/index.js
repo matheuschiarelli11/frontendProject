@@ -52,17 +52,17 @@ const Dashboard = () => {
                 </Icon>
 
                 <div>
-                    <h1>Nome de usuário:⠀</h1>
+                    <h1>Nome:</h1>
                     <h1 className="info-text">{user.name}</h1>
-                    <ButtonEdit onClick={() => setShowModal(true)}>
-                        Editar
-                    </ButtonEdit>
                 </div>
 
                 <div>
-                    <h1>Email:⠀</h1> <h1 className="info-text">{user.email}</h1>
+                    <h1>Email:</h1> <h1 className="info-text">{user.email}</h1>
                 </div>
 
+                <ButtonEdit onClick={() => setShowModal(true)}>
+                    Editar Nome
+                </ButtonEdit>
                 <ButtonDelete onClick={() => handleDelete()}>
                     Excluir Usuário
                 </ButtonDelete>

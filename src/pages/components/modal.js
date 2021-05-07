@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, useSetState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { authService } from "../../services/api";
 import { Container, EditUser } from "./styles";
 import swal from "sweetalert";
+import { toast } from "react-toastify";
 
 const Modal = ({ onClose = () => {} }) => {
-    const [name, setName, getValue] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [user, setUser] = useState({});
     const [buttonEnable, setButton] = useState(false);
@@ -49,17 +50,28 @@ const Modal = ({ onClose = () => {} }) => {
             id: user.id,
         };
 
-        const response = await authService.editUser(data);
-        const localUser = JSON.parse(localStorage.getItem("user"));
-        localStorage.removeItem("user");
-        authService.loggedUser({ user: response.data, token: localUser.token });
-        swal({
-            title: "Sucesso!",
-            text: "Suas informações foram alteradas",
-            type: "success",
-        }).then(function () {
-            location.reload();
-        });
+        try {
+            const response = await authService.editUser(data);
+            const localUser = JSON.parse(localStorage.getItem("user"));
+            localStorage.removeItem("user");
+            authService.loggedUser({
+                user: response.data,
+                token: localUser.token,
+            });
+            swal({
+                title: "Sucesso!",
+                text: "Suas informações foram alteradas",
+                type: "success",
+            }).then(function () {
+                onClose();
+                location.reload();
+            });
+        } catch (error) {
+            toast.error(error.response.data.message, {
+                autoClose: 2500,
+                hideProgressBar: true,
+            });
+        }
     }
 
     return (
@@ -89,7 +101,6 @@ const Modal = ({ onClose = () => {} }) => {
                 <button
                     onClick={() => {
                         updateInfo();
-                        onClose();
                     }}
                     disabled={!buttonEnable}
                 >

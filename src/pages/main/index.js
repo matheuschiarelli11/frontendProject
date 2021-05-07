@@ -4,6 +4,7 @@ import { authService } from "../../services/api";
 import Navbar from "../components/menuBar/navbar";
 
 import { Title, LogOutButton } from "./styles";
+import BarChart from "../components/chart/barChart";
 
 export default class main extends Component {
     constructor(props) {
@@ -31,11 +32,14 @@ export default class main extends Component {
         return (
             <>
                 <Navbar />
-                <Title>Você esta logado, clique em "Sair" para deslogar</Title>
 
                 <LogOutButton onClick={authService.cleanLoggedUser}>
                     Sair
                 </LogOutButton>
+
+                <Title>Você esta logado!</Title>
+
+                <BarChart />
             </>
         );
     }
