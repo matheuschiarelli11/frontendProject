@@ -5,6 +5,7 @@ import Navbar from "../components/menuBar/navbar";
 
 import { Title, LogOutButton } from "./styles";
 import BarChart from "../components/chart/barChart";
+import SecondBarChart from "../components/chart/barChart2";
 
 export default class main extends Component {
     constructor(props) {
@@ -32,14 +33,14 @@ export default class main extends Component {
         return (
             <>
                 <Navbar />
-
                 <LogOutButton onClick={authService.cleanLoggedUser}>
                     Sair
                 </LogOutButton>
-
                 <Title>Você esta logado!</Title>
-
                 <BarChart />
+                <br />
+                <br />
+                <SecondBarChart />
             </>
         );
     }

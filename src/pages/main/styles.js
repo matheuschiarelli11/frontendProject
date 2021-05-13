@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Title = styled.h1`
     color: #fff;
-    margin-left: 300px;
+    margin-left: 540px;
 
     a {
         display: flex;

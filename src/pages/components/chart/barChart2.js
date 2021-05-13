@@ -3,22 +3,22 @@ import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { Container } from "./styles";
 
-const BarChart = () => {
+const SecondBarChart = () => {
     const [chartData, setChartData] = useState({});
 
-    const Chart = () => {
+    const ChartMonth = () => {
         axios
-            .get("http://localhost:3333/info")
+            .get("http://localhost:3333/infoM")
             .then((res) => {
                 setChartData({
-                    labels: res.data.days,
+                    labels: res.data.months,
                     datasets: [
                         {
-                            label: "Login realizados no DIA",
+                            label: "Login realizados no MÊS",
                             responsive: true,
                             data: res.data.loginQty,
                             borderColor: ["rgba(0, 0, 0, 0.6)"],
-                            backgroundColor: ["rgba(75, 192, 192, 0.6)"],
+                            backgroundColor: ["rgba(0, 1, 51, 0.8)"],
                             borderWidth: 1,
                             color: "#fff",
                         },
@@ -31,7 +31,7 @@ const BarChart = () => {
     };
 
     useEffect(() => {
-        Chart();
+        ChartMonth();
     }, []);
     return (
         <Container
@@ -58,4 +58,4 @@ const BarChart = () => {
     );
 };
 
-export default BarChart;
+export default SecondBarChart;
