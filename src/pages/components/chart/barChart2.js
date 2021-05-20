@@ -6,9 +6,21 @@ import { Container } from "./styles";
 const SecondBarChart = () => {
     const [chartData, setChartData] = useState({});
 
+    const baseURL = "http://localhost:3333";
+
     const ChartMonth = () => {
+        const data = JSON.parse(localStorage.getItem("user"));
+
+        if (!data) {
+            return;
+        }
+
+        const token = data.token;
+        console.log();
         axios
-            .get("http://localhost:3333/infoM")
+            .get(`${baseURL}/months/`, {
+                headers: { authorization: `Bearer ${token}` },
+            })
             .then((res) => {
                 setChartData({
                     labels: res.data.months,

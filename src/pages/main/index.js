@@ -1,47 +1,37 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { authService } from "../../services/api";
 import Navbar from "../components/menuBar/navbar";
-
 import { Title, LogOutButton } from "./styles";
 import BarChart from "../components/chart/barChart";
 import SecondBarChart from "../components/chart/barChart2";
 
-export default class main extends Component {
-    constructor(props) {
-        super(props);
+const main = () => {
+    let history = useHistory();
 
-        this.state = {
-            redirectTo: null,
-        };
+    async function logout() {
+        await authService.cleanLoggedUser();
+        history.push("/");
     }
 
-    async componentDidMount() {
-        const loggedUser = await authService.getLoggedUser();
+    useEffect(() => {
+        const loggedUser = authService.getLoggedUser();
 
         if (!loggedUser) {
-            this.setState({ redirectTo: "/" });
-            console.log(loggedUser);
+            return history.push("/");
         }
-    }
+    }, []);
 
-    render() {
-        if (this.state.redirectTo) {
-            return <Redirect to={this.state.redirectTo} />;
-        }
-
-        return (
-            <>
-                <Navbar />
-                <LogOutButton onClick={authService.cleanLoggedUser}>
-                    Sair
-                </LogOutButton>
-                <Title>Você esta logado!</Title>
-                <BarChart />
-                <br />
-                <br />
-                <SecondBarChart />
-            </>
-        );
-    }
-}
+    return (
+        <>
+            <Navbar />
+            <LogOutButton onClick={logout}>Sair</LogOutButton>
+            <Title>Você esta logado!</Title>
+            <BarChart />
+            <br />
+            <br />
+            <SecondBarChart />
+        </>
+    );
+};
+export default main;

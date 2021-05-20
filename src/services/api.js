@@ -46,6 +46,5 @@ export const authService = {
 
     cleanLoggedUser() {
         localStorage.clear();
-        window.location.reload();
     },
 };

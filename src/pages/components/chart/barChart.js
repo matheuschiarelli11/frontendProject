@@ -6,9 +6,21 @@ import { Container } from "./styles";
 const BarChart = () => {
     const [chartData, setChartData] = useState({});
 
+    const baseURL = "http://localhost:3333";
+
     const Chart = () => {
+        const data = JSON.parse(localStorage.getItem("user"));
+
+        if (!data) {
+            return;
+        }
+
+        const token = data.token;
+
         axios
-            .get("http://localhost:3333/info")
+            .get(`${baseURL}/days/`, {
+                headers: { authorization: `Bearer ${token}` },
+            })
             .then((res) => {
                 setChartData({
                     labels: res.data.days,
@@ -49,6 +61,7 @@ const BarChart = () => {
                         yAxes: {
                             ticks: {
                                 maxTicksLimit: 6,
+                                beginAtZero: false,
                             },
                         },
                     },
